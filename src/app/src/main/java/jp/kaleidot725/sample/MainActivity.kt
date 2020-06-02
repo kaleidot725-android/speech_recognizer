@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    private val recognitionListener: RecognitionListener = createRecognitionListenerForLog("TAG")
     private val recognizeSpeechIntent : Intent get() =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
         this.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         this.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, applicationContext.packageName)
@@ -27,7 +26,9 @@ class MainActivity : AppCompatActivity() {
         requestRecordAudioPermissions()
 
         val recognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
-        recognizer.setRecognitionListener(recognitionListener)
+        recognizer.setRecognitionListener(createRecognitionListenerStringStream {
+            recognize_text_view.text = it
+        })
         recognize_button.setOnClickListener {
             recognizer.startListening(recognizeSpeechIntent)
         }
