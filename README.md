@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
 **RecognizerListnerにて音声入力を開始・停止できるようにする**
 
-RecognizerLisnter にて音声入力の開始と停止を操作ができるように各ボタンのクリック処理で呼び出されるように設定します。音声入力を開始は startListening で実行できるようになっています。引数には RecognizerIntent を指定するようになっていますが ACTION_RECOGNIZE_SPEECH の Intent を渡してやればOKです。また音声入力の停止は stopListnening で実行できるようにあんっています。引数に関しては特に指定できないので、そのまま呼び出すだけで良いです。
+RecognizerLisnter にて音声入力の開始と停止を操作ができるように各ボタンのクリック処理で呼び出されるように設定します。音声入力を開始は startListening で実行できるようになっています。引数には RecognizerIntent を指定するようになっていますが ACTION_RECOGNIZE_SPEECH の Intent を渡してやればOKです。また音声入力の停止は stopListnening で実行できるようになっています。引数に関しては特に指定できないのでそのまま呼び出すだけで良いです。
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-RecognizerIntent ですが 3つの種類があります、今回は ACTION_RECOGNIZE_SPEECH を選択しましたが、音声入力のシチュエーションによって使い分ける必要があります。
+今回は RecognizerIntent　として ACTION_RECOGNIZE_SPEECH を選択しましたが、RecognizerIntentには 3つの種類があります。そのため場合によって使い分けが必要になります。
 
 | 名称 | 説明 |
 | ------- | ------- |
