@@ -21,7 +21,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        requestRecordAudioPermissions()
+        val granted = ContextCompat.checkSelfPermission(this, RECORD_AUDIO)
+        if (granted == PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        ActivityCompat.requestPermissions(this, arrayOf(RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
         speechRecognizer?.setRecognitionListener(createRecognitionListenerStringStream { recognize_text_view.text = it })
@@ -33,14 +37,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         speechRecognizer?.cancel()
         speechRecognizer?.destroy()
-    }
-
-    private fun requestRecordAudioPermissions() {
-        val granted = ContextCompat.checkSelfPermission(this, RECORD_AUDIO)
-        if (granted == PackageManager.PERMISSION_GRANTED) {
-            return
-        }
-        ActivityCompat.requestPermissions(this, arrayOf(RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
     }
 
     private fun createRecognitionListenerStringStream(onResult : (String)-> Unit) : RecognitionListener {
