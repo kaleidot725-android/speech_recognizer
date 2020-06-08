@@ -1,6 +1,7 @@
 package jp.kaleidot725.sample
 
 import android.Manifest.permission.RECORD_AUDIO
+import android.app.VoiceInteractor
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -21,9 +22,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         requestRecordAudioPermissions()
+
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
         speechRecognizer?.setRecognitionListener(createRecognitionListenerStringStream { recognize_text_view.text = it })
-        recognize_start_button.setOnClickListener { speechRecognizer?.startListening(recognizeSpeechIntent) }
+        recognize_start_button.setOnClickListener { speechRecognizer?.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)) }
         recognize_stop_button.setOnClickListener { speechRecognizer?.stopListening() }
     }
 
@@ -39,11 +41,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
         ActivityCompat.requestPermissions(this, arrayOf(RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
-    }
-
-    private val recognizeSpeechIntent : Intent get() =  Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-        this.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        this.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, applicationContext.packageName)
     }
 
     private fun createRecognitionListenerStringStream(onResult : (String)-> Unit) : RecognitionListener {
