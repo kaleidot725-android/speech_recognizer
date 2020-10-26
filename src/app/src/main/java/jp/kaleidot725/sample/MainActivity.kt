@@ -22,10 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val granted = ContextCompat.checkSelfPermission(this, RECORD_AUDIO)
-        if (granted == PackageManager.PERMISSION_GRANTED) {
-            return
+        if (granted != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
         }
-        ActivityCompat.requestPermissions(this, arrayOf(RECORD_AUDIO), PERMISSIONS_RECORD_AUDIO)
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
         speechRecognizer?.setRecognitionListener(createRecognitionListenerStringStream { recognize_text_view.text = it })
