@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
         speechRecognizer?.setRecognitionListener(createRecognitionListenerStringStream { recognize_text_view.text = it })
-        recognize_start_button.setOnClickListener { speechRecognizer?.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)) }
+        recognize_start_button.setOnClickListener {
+            speechRecognizer?.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH))
+        }
         recognize_stop_button.setOnClickListener { speechRecognizer?.stopListening() }
     }
 
